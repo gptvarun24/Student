@@ -1,20 +1,45 @@
 package com.studentcrud.exception;
 
+import java.util.List;
+
 public class ErrorResponse {
-    private String msg;
+	
+    private String errorCode;
+    private List<String> errorMessage;
     
-	public ErrorResponse(String msg) {
+	
+
+	public ErrorResponse(String errorCode, List<String> errorMessage) {
 		super();
-		this.msg = msg;
+		this.errorCode = errorCode;
+		this.errorMessage = errorMessage;
 	}
 
-	public String getMsg() {
-		return msg;
+
+
+	public String getErrorCode() {
+		return errorCode;
 	}
 
-	public void setMsg(String msg) {
-		this.msg = msg;
+
+
+	public void setErrorCode(String errorCode) {
+		this.errorCode = errorCode;
 	}
+
+
+
+	public List<String> getErrorMessage() {
+		return errorMessage;
+	}
+
+
+
+	public void setErrorMessage(List<String> errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
+
 
 	public ErrorResponse() {
 		

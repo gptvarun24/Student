@@ -8,8 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.studentcrud.EntityPackages.Student;
 import com.studentcrud.Repository.StudentRepository;
+import com.studentcrud.exception.StudentException;
 @Service
 public class StudentService {
+	
     @Autowired
     private StudentRepository studentRepo;
     
@@ -21,28 +23,51 @@ public class StudentService {
 	@Transactional
 	public List<Student> getAll() {
 		
-		return studentRepo.getAll();
+		List<Student> studentList =  studentRepo.getAll();
+		return studentList;
 	}
 
 
 	@Transactional
 	public Student getbyId(int id) {
 	
-		return studentRepo.getbyId(id);
+		Student student =  studentRepo.getbyId(id);
+		if(student==null)
+		{
+			throw new StudentException("Student not found in Database");
+		}
+		return student;
 	}
 
 	
 	@Transactional
-	public void delete(int id) {
-		studentRepo.delete(id);
-		
+	public String delete(int id) {
+		 Student student = getbyId(id);
+		 if(student==null)
+		  {
+			  throw new StudentException("Student not found in Database");
+		  }
+		 studentRepo.delete(id);
+		 return "Student deleted successfully with id : " + id;
 	}
 
 
 	@Transactional
-	public void add(Student st) {
-		studentRepo.add(st);
+	public String add(Student student) {
 		
+		studentRepo.add(student);
+		return "Student added successfully";
+	}
+	
+	@Transactional
+	public String update(Student student) {
+		Student dbStudent = getbyId(student.getId());
+		if(dbStudent==null)
+		  {
+			  throw new StudentException("Student not found in Database");
+		  }
+		studentRepo.add(student);
+		return "Student updated successfully";
 	}
 
 }

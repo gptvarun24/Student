@@ -36,36 +36,31 @@ public class Restcontroller {
 	}
 	
 	@GetMapping("/students/{studentid}")
-	public ResponseEntity<Student> getbyId(@PathVariable int studentid) throws Exception
+	public ResponseEntity<Student> getbyId(@PathVariable int studentid) 
 	{  
 		Student student = service.getbyId(studentid);
-		if(student==null)
-		{
-			throw new Exception("Student not found in Database");
-		}
 		return new ResponseEntity<>(student,HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/students/{id}")
-	public void delete(@PathVariable int id) throws Exception
-	{   Student student = service.getbyId(id);
-	  if(student==null)
-	  {
-		  throw new Exception("Student not found in Database");
-	  }
-		service.delete(id);
+	public ResponseEntity<String> delete(@PathVariable int id) 
+	{  
+	    String response = service.delete(id);
+		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 	
 	@PostMapping("/students")
-	public void add(@RequestBody Student student)
-	{   student.setId(0);
-		service.add(student);
+	public ResponseEntity<String> add(@RequestBody Student student)
+	{   
+		String response = service.add(student);
+		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 	
 	@PutMapping("/students")
-	public void update(@RequestBody Student st)
+	public ResponseEntity<String> update(@RequestBody Student student)
 	{
-		service.add(st);
+		String response = service.update(student);
+		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 
 }

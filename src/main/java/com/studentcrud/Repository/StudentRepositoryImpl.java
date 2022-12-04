@@ -13,37 +13,37 @@ import com.studentcrud.EntityPackages.Student;
 @Repository
 public class StudentRepositoryImpl implements StudentRepository {
    @Autowired
-   private EntityManager em;
+   private EntityManager entityManager;
 	public StudentRepositoryImpl() {
-		// TODO Auto-generated constructor stub
+	
 	}
 
 	@Override
 	public List<Student> getAll() {
 		
-		Query q = em.createQuery("from Student",Student.class);
-		List<Student> students = q.getResultList();
+		Query query = entityManager.createQuery("from Student",Student.class);
+		List<Student> students = query.getResultList();
 		return students;
 	}
 
 	@Override
 	public Student getbyId(int id) {
 		
-		Student s = em.find(Student.class,id);
-		return s;
+		Student student = entityManager.find(Student.class,id);
+		return student;
 	}
 
 	@Override
-	public void delete(int Sid) {
-		Query q = em.createQuery("delete from Student where id =: theid");
-		q.setParameter("theid",Sid);
+	public void delete(int studentId) {
+		Query q = entityManager.createQuery("delete from Student where id =: id");
+		q.setParameter("id",studentId);
 		q.executeUpdate();
 		
 	}
 
 	@Override
-	public void add(Student st) {
-	em.merge(st);
+	public void add(Student student) {
+		entityManager.merge(student);
 		
 	}
 
